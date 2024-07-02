@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class TheDirector : MonoBehaviour
 {
+    [SerializeField] GameObject preFabEnemy;
+    
     public static TheDirector instance;
     public GameState State;
     public static event Action<GameState> OnGameStateChanged;
@@ -16,6 +19,13 @@ public class TheDirector : MonoBehaviour
     public void Start()
     {
         UpdateGameState(GameState.Player);
+    }
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            PoolManager.SpawnObject(preFabEnemy, preFabEnemy.transform.position, preFabEnemy.transform.rotation);
+        }
     }
 
 
