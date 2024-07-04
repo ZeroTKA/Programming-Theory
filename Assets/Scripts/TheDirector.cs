@@ -6,8 +6,8 @@ using UnityEngine.Pool;
 
 public class TheDirector : MonoBehaviour
 {
-    [SerializeField] GameObject preFabEnemy;
-    
+    [SerializeField] GameObject prefabEnemy;
+
     public static TheDirector instance;
     public GameState State;
     public static event Action<GameState> OnGameStateChanged;
@@ -24,7 +24,7 @@ public class TheDirector : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
-            PoolManager.SpawnObject(preFabEnemy, preFabEnemy.transform.position, preFabEnemy.transform.rotation);
+            PoolManager.SpawnObject(prefabEnemy, prefabEnemy.transform.position, prefabEnemy.transform.rotation, PoolManager.PoolEmpty.Enemies);
         }
     }
 
@@ -50,10 +50,10 @@ public class TheDirector : MonoBehaviour
     }
 
     public enum GameState
-{
-    Player,
-    Wave,
-    Victory,
-    Defeat
-}
+    {
+        Player,
+        Wave,
+        Victory,
+        Defeat
+    }
 }

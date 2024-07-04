@@ -7,7 +7,16 @@ public class PoolManager : MonoBehaviour
 {
     public static List<PooledObjectInfo> ObjectPools = new List<PooledObjectInfo>();
 
-    public static GameObject SpawnObject(GameObject objectToSpawn, Vector3 spawnPosition, Quaternion spawnRotation)
+    private static GameObject EnemeyGameobjectEmpty;
+    private static GameObject NoneGameobjectEmpty;
+
+
+    private void Awake()
+    {
+        SetupEmpties();
+    }
+
+    public static GameObject SpawnObject(GameObject objectToSpawn, Vector3 spawnPosition, Quaternion spawnRotation, PoolEmpty poolEmpty = PoolEmpty.None)        
     {
         PooledObjectInfo pool = ObjectPools.Find(p => p.LookupString == objectToSpawn.name);
 
@@ -24,11 +33,17 @@ public class PoolManager : MonoBehaviour
 
         if (spawnableObject == null)
         {
+            //Find the parent and then assign the new Instantiate to it.
+            GameObject parentObject = SetParentObject(poolEmpty);           
             spawnableObject = Instantiate(objectToSpawn, spawnPosition, spawnRotation);
+            if(parentObject != null)
+            {
+                spawnableObject.transform.SetParent(parentObject.transform);
+            }
         }
         else
         {
-            
+         // found an object in the pool, reusing it.   
             spawnableObject.transform.position = spawnPosition;
             spawnableObject.transform.rotation = spawnRotation;
             pool.InactiveObjects.Remove(spawnableObject);
@@ -39,9 +54,8 @@ public class PoolManager : MonoBehaviour
 
     public static void ReturnObjectToPool(GameObject obj)
     {
+        // Remove clone from the OBJ name to match when it was put in the pool.
         string goName = obj.name.Substring(0, obj.name.Length - 7);
-      
-
         PooledObjectInfo pool = ObjectPools.Find(p =>p.LookupString == goName);
 
         if(pool == null)
@@ -54,8 +68,32 @@ public class PoolManager : MonoBehaviour
             pool.InactiveObjects.Add(obj);
         }
     }
+    public void SetupEmpties()
+    {
+        EnemeyGameobjectEmpty = new GameObject("Pooled Enemy Empty");
+        NoneGameobjectEmpty = new GameObject("None Empty");
+    }
+    public enum PoolEmpty
+    {
+        Enemies,
+        None
+    }
+    private static GameObject SetParentObject(PoolEmpty p)
+    {
+        
+        switch (p)
+        {
+            case PoolEmpty.Enemies:
+                return EnemeyGameobjectEmpty;
+            case PoolEmpty.None:
+                return NoneGameobjectEmpty;
+            default:
+                return null;               
+        }
+    }
 
 }
+
 
 public class PooledObjectInfo
 {
