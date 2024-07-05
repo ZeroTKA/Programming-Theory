@@ -22,10 +22,7 @@ public class TheDirector : MonoBehaviour
     }
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            PoolManager.SpawnObject(prefabEnemy, prefabEnemy.transform.position, prefabEnemy.transform.rotation, PoolManager.PoolEmpty.Enemies);
-        }
+
     }
 
 
