@@ -6,6 +6,9 @@ public class Enemy : MonoBehaviour
 {
     public void DealDamage()
     {
-        Debug.Log("We did damage. Horray");
+        Debug.Log("Congrats on Damage");
     }
+
+
+
 }
