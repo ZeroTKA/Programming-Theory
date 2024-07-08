@@ -4,20 +4,43 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
+    public Camera fpsCam;
     public Transform firePoint;
+    public float range = 100;
+    //public GameObject FireVFX;
+    //public GameObject HitVFX;
 
     // Update is called once per frame
     void Update()
     {
-        Shooting();
+        // left mouse button
+        if (Input.GetMouseButtonDown(0))
+        {
+            Shooting();
+        }
+
+
     }
 
     public void Shooting()
     {
+        
         RaycastHit hit;
-        if(Physics.Raycast(firePoint.position, transform.TransformDirection(Vector3.up), out hit, 100))
+        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
         {
-            Debug.DrawRay(firePoint.position, transform.TransformDirection(Vector3.up) * hit.distance, Color.yellow);
+           Debug.DrawRay(fpsCam.transform.position, fpsCam.transform.forward * hit.distance, Color.yellow);
+
+            //vfx hookup
+            //GameObject a = Instantiate(FireVFX, firePoint.position , Quaternion.identity);
+            //GameObject b = Instantiate(HitVFX, hit.point, Quaternion.identity);
+
+            Enemy enemy = hit.transform.GetComponent<Runner>();
+
+            if (enemy != null ) 
+            {                
+                enemy.DealDamage(2);
+                Debug.Log($"2 Damage done");
+            }
         }
     }
 }
