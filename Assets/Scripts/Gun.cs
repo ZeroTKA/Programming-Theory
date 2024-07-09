@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 public class Gun : MonoBehaviour
 {
@@ -18,8 +20,6 @@ public class Gun : MonoBehaviour
         {
             Shooting();
         }
-
-
     }
 
     public void Shooting()
@@ -34,12 +34,11 @@ public class Gun : MonoBehaviour
             //GameObject a = Instantiate(FireVFX, firePoint.position , Quaternion.identity);
             //GameObject b = Instantiate(HitVFX, hit.point, Quaternion.identity);
 
-            Enemy enemy = hit.transform.GetComponent<Runner>();
+            Runner script = hit.transform.gameObject.GetComponent<Runner>();
 
-            if (enemy != null ) 
+            if (script != null ) 
             {                
-                enemy.DealDamage(2);
-                Debug.Log($"2 Damage done");
+                script.DealDamage(2);
             }
         }
     }
