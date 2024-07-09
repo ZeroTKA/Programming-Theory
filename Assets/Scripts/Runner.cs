@@ -6,18 +6,24 @@ using UnityEngine.AI;
 
 public class Runner : Enemy
 {
-    public Transform player;
-   
+    private NavMeshAgent agent;
+    private Transform player;
+
+
+    private void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        player = GameObject.FindWithTag("Player").transform;
+    }
     // Start is called before the first frame update
     void Start()
     {
-        health = 5;
-        agent = this.GetComponent<NavMeshAgent>();
+        health = 5;        
     }
 
     // Update is called once per frame
     void Update()
     {
-        RunTowardTarget(player);
+        agent.destination = player.position;
     }
 }

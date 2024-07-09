@@ -6,13 +6,6 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     public static float health = 10;
-    protected static NavMeshAgent agent;
-
-
-    public void RunTowardTarget(Transform target)
-    {
-        agent.destination = target.position;
-    }
 
     public void DealDamage(int damage)
     {
