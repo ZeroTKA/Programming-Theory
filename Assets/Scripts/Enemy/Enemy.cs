@@ -7,7 +7,24 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] float Health;
     [SerializeField] float MaxHealth;
-    NavMeshAgent Agent;
+
+    // This is Encapsulation ///////////////////
+    private float m_Speed = 3.5f;
+    public float Speed
+    {
+        get { return m_Speed; }
+        set {
+            if (value < 0.0f)
+            {
+
+            }
+            else
+            {
+                m_Speed = value;
+            }
+        }                
+    }
+    protected NavMeshAgent Agent;
     Transform Player;
 
     private void Awake()
@@ -15,6 +32,10 @@ public class Enemy : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         Agent = GetComponent<NavMeshAgent>();
         SetHealth();
+    }
+    private void OnEnable()
+    {
+        VariablesToResetOnEnable();
     }
 
     protected void Move()
@@ -27,12 +48,24 @@ public class Enemy : MonoBehaviour
 
         if (Health <= 0)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
+    }
+
+    protected void VariablesToResetOnEnable()
+    {
+        //This is Abstraction ///////////////////////////
+        SetHealth();
+        SetSpeed(Speed);
     }
     protected void SetHealth()
     {
         Health = MaxHealth;
+    }
+
+    public virtual void SetSpeed(float s)
+    {
+        Agent.speed = s;
     }
 }
 
