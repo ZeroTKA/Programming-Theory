@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
             }
         }                
     }
+
     protected NavMeshAgent Agent;
     Transform Player;
 
@@ -31,7 +32,6 @@ public class Enemy : MonoBehaviour
     {
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         Agent = GetComponent<NavMeshAgent>();
-        SetHealth();
     }
     private void OnEnable()
     {
@@ -48,7 +48,8 @@ public class Enemy : MonoBehaviour
 
         if (Health <= 0)
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
+            //gameObject.SetActive(false);
         }
     }
 
