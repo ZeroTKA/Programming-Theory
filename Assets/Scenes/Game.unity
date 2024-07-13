@@ -4038,6 +4038,11 @@ MonoBehaviour:
   fpsCam: {fileID: 1585305430}
   firePoint: {fileID: 876620866}
   range: 100
+  fireRate: 0.4
+  prevShotTime: 0
+  maxAmmo: 20
+  currentAmmo: 20
+  isReloading: 0
 --- !u!1 &1536117578
 GameObject:
   m_ObjectHideFlags: 0
