@@ -11,11 +11,11 @@ public class Gun : MonoBehaviour
     [SerializeField] float range = 100;
     [SerializeField] float fireRate;
     [SerializeField] float prevShotTime = 0;
-    [SerializeField] int maxClipSize;
-    // ammo in the clip ready to fire
-    [SerializeField] int currentClipAmmo;
-    // ammo available to load the clip with.
-    [SerializeField] int ammoStock;
+    [SerializeField] int magSize;
+    // ammo in the magazine ready to fire
+    [SerializeField] int ammoInMag;
+    // ammo available to load the magazine with.
+    [SerializeField] int ammoInInventory;
     [SerializeField] bool isReloading = false;
     
 
@@ -26,7 +26,8 @@ public class Gun : MonoBehaviour
     void Update()
     {
         // left mouse button
-        if (Input.GetMouseButtonDown(0))
+        //Debug.Log($"{Input.GetMouseButton(0)}");
+        if (Input.GetMouseButton(0))
         {
             Shooting();
         }
@@ -39,7 +40,7 @@ public class Gun : MonoBehaviour
 
     public void Shooting()
     {
-        if(prevShotTime + fireRate < Time.time && currentClipAmmo > 0 && !isReloading)
+        if(prevShotTime + fireRate < Time.time && ammoInMag > 0 && !isReloading)
         {
             //set new prevShotTime
             prevShotTime = Time.time;
@@ -63,14 +64,19 @@ public class Gun : MonoBehaviour
                 }
             }
             //lose ammo
-            currentClipAmmo--;
+            ammoInMag--;
         }
         
 
     }
+
+
+    /// <summary>
+    /// edge case where we have 3 ammo in our inventor and we need 10 to fill clip. As we are reloading, we walk over more ammo.
+    /// </summary>
     public void Reloading()
     {
-        if(!isReloading && ammoStock > 0 &&  currentClipAmmo < maxClipSize)
+        if(!isReloading && ammoInInventory > 0 &&  ammoInMag < magSize)
         {
             Debug.Log("Reloading");
             isReloading = true;
@@ -81,23 +87,25 @@ public class Gun : MonoBehaviour
     IEnumerator ReloadingAmmo()
     {
         yield return new WaitForSeconds(3);
-        int refillAmount = HowManyToRefill(maxClipSize, currentClipAmmo);
-        if(ammoStock >= refillAmount)
+        int refillAmount = HowManyToRefill(magSize, ammoInMag);
+        // if we have enough ammo in inventory
+        if(ammoInInventory >= refillAmount)
         {
-            ammoStock -= refillAmount;
-            currentClipAmmo += refillAmount;
+            ammoInInventory -= refillAmount;
+            ammoInMag += refillAmount;
         }
+        //if we don't have enough ammo in inventory
         else
         {
-            currentClipAmmo += ammoStock;
-            ammoStock = 0;            
+            ammoInMag += ammoInInventory;
+            ammoInInventory = 0;            
         }
         
         isReloading = false;
 
     }
-    int HowManyToRefill(int clipSize, int clipAmmo)
+    int HowManyToRefill(int magSize, int ammo)
     {
-        return maxClipSize - currentClipAmmo;
+        return magSize - ammo;
     }
 }
