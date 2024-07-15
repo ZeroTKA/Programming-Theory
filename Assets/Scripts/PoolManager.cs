@@ -9,6 +9,7 @@ public class PoolManager : MonoBehaviour
 
     private static GameObject EnemeyGameobjectEmpty;
     private static GameObject NoneGameobjectEmpty;
+    private static GameObject RunnerGameobjectEmpty;
 
 
     private void Awake()
@@ -70,12 +71,14 @@ public class PoolManager : MonoBehaviour
     }
     public void SetupEmpties()
     {
+        RunnerGameobjectEmpty = new GameObject("Pooled Runner Empty");
         EnemeyGameobjectEmpty = new GameObject("Pooled Enemy Empty");
         NoneGameobjectEmpty = new GameObject("None Empty");
     }
     public enum PoolEmpty
     {
         Enemies,
+        Runner,
         None
     }
     private static GameObject SetParentObject(PoolEmpty p)
@@ -83,12 +86,25 @@ public class PoolManager : MonoBehaviour
         
         switch (p)
         {
+            case PoolEmpty.Runner:
+                return RunnerGameobjectEmpty;
             case PoolEmpty.Enemies:
                 return EnemeyGameobjectEmpty;
             case PoolEmpty.None:
                 return NoneGameobjectEmpty;
             default:
                 return null;               
+        }
+    }
+    public static PoolEmpty FindPool(GameObject obj)
+    {
+        
+        switch (obj.name)
+        {
+            case "Runner":
+                return PoolEmpty.Runner;
+            default:
+                return PoolEmpty.None;
         }
     }
 
