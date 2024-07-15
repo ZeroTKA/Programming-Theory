@@ -6,16 +6,23 @@ using UnityEngine.Assertions.Must;
 
 public class Gun : MonoBehaviour
 {
+    [SerializeField] GameObject HitVFX;
+    //[SerializeField] GameObject ShootVFX;
+
     [SerializeField] Camera fpsCam;
+
     [SerializeField] Transform firePoint;
+
     [SerializeField] float range = 100;
     [SerializeField] float fireRate;
     [SerializeField] float prevShotTime = 0;
+
     [SerializeField] int magSize;
     // ammo in the magazine ready to fire
     [SerializeField] int ammoInMag;
     // ammo available to load the magazine with.
     [SerializeField] int ammoInInventory;
+
     [SerializeField] bool isReloading = false;
     
 
@@ -53,8 +60,8 @@ public class Gun : MonoBehaviour
                 Debug.DrawRay(fpsCam.transform.position, fpsCam.transform.forward * hit.distance, Color.yellow);
 
                 //vfx hookup
-                //GameObject a = Instantiate(FireVFX, firePoint.position , Quaternion.identity);
-                //GameObject b = Instantiate(HitVFX, hit.point, Quaternion.identity);
+                //GameObject a = Instantiate(ShootVFX, firePoint.position , firePoint.rotation * Quaternion.Euler(Vector3.up));
+                GameObject b = Instantiate(HitVFX, hit.point, Quaternion.identity);
 
                 Enemy script = hit.transform.gameObject.GetComponent<Enemy>();
 

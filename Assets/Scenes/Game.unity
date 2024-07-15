@@ -4174,6 +4174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a95a9ba410e294883f077f542a87cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HitVFX: {fileID: 100002, guid: 3b1513bcb86426b4795879be6a128ed7, type: 3}
   fpsCam: {fileID: 1585305430}
   firePoint: {fileID: 876620866}
   range: 100
