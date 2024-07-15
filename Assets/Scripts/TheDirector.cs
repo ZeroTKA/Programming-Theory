@@ -35,6 +35,7 @@ public class TheDirector : MonoBehaviour
             case GameState.Player:
                 break;
             case GameState.Wave:
+                WaveManager.instance.StartWaves();
                 break;
             case GameState.Victory:
                 break;

@@ -7,6 +7,7 @@ using static PoolManager;
 
 public class WaveManager : MonoBehaviour
 {
+    public static WaveManager instance;
     public Wave[] waves;
     public Transform[] spawnPoints;
 
@@ -15,26 +16,42 @@ public class WaveManager : MonoBehaviour
     private bool canSpawn = true;
     private float nextSpawnTime;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Update()
+    {
+        if(TheDirector.GameState.Wave == TheDirector.instance.State)
+        {
+            SpawnEnemiesForWave();
+            // -------------------------
+            // This whole section can probably be WAY faster. We spawn using OnEnable and remove with OnDisable. Just keep track of a public int. 
+            GameObject[] totalEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+            if (totalEnemies.Length == 0 && !canSpawn && currentWaveNumber + 1 != waves.Length)
+            {
+                MoveToNextWave();
+            }
+            else if(totalEnemies.Length == 0 && !canSpawn && currentWaveNumber + 1 == waves.Length)
+            {
+                TheDirector.instance.UpdateGameState(TheDirector.GameState.Victory);
+                Debug.Log("YO WIN");
+            }    
+            // ------------------------
+        }
+
+    }
+    public void StartWaves()
     {
         // do we need to set currentWave every frame??? no way.
         currentWave = waves[currentWaveNumber];
-        SpawnEnemiesForWave();
-
-        // -------------------------
-        // This whole section can probably be WAY faster. We spawn using OnEnable and remove with OnDisable. Just keep track of a public int. 
-        GameObject[] totalEnemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if (totalEnemies.Length == 0 && !canSpawn && currentWaveNumber+1 != waves.Length)
-        {
-            MoveToNextWave();
-        }
-
-        // ------------------------
     }
     private void MoveToNextWave()
     {
         currentWaveNumber++;
         canSpawn = true;
+        TheDirector.instance.UpdateGameState(TheDirector.GameState.Player);
     }
 
     void SpawnEnemiesForWave()
@@ -45,7 +62,7 @@ public class WaveManager : MonoBehaviour
             Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
             //Instantiate(randomEnemy, randomSpawnPoint.position, Quaternion.identity);
             PoolEmpty pool = FindPool(randomEnemy);
-            SpawnObject(randomEnemy, randomSpawnPoint.position, Quaternion.identity,pool);
+            SpawnObject(randomEnemy, randomSpawnPoint.position, Quaternion.identity, pool);
             currentWave.numberOfEnemies--;
             nextSpawnTime = Time.time + currentWave.spawnInterval;
             if (currentWave.numberOfEnemies == 0)
@@ -88,6 +105,7 @@ public class WaveManager : MonoBehaviour
         }
                
     }
+
 }
 
 [System.Serializable]
