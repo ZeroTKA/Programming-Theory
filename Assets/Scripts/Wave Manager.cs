@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using static PoolManager;
 
 
 public class WaveManager : MonoBehaviour
@@ -41,7 +43,10 @@ public class WaveManager : MonoBehaviour
         {
             GameObject randomEnemy = currentWave.typeOfEnemies[Random.Range(0, currentWave.typeOfEnemies.Length)];
             Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            Instantiate(randomEnemy, randomSpawnPoint.position, Quaternion.identity);
+            //Instantiate(randomEnemy, randomSpawnPoint.position, Quaternion.identity);
+            Debug.Log($"WE are here with this random enemy named {randomEnemy.name}");
+            PoolEmpty pool = FindPool(randomEnemy);
+            SpawnObject(randomEnemy, randomSpawnPoint.position, Quaternion.identity,pool);
             currentWave.numberOfEnemies--;
             nextSpawnTime = Time.time + currentWave.spawnInterval;
             if (currentWave.numberOfEnemies == 0)

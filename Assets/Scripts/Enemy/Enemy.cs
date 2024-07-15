@@ -48,7 +48,7 @@ public class Enemy : MonoBehaviour
 
         if (Health <= 0)
         {
-            Destroy(gameObject);
+            PoolManager.ReturnObjectToPool(gameObject);
             //gameObject.SetActive(false);
         }
     }
