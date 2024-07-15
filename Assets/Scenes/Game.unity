@@ -1734,23 +1734,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves:
   - waveName: Wave 1
-    numberOfEnemies: 50
+    numberOfEnemies: 1
     typeOfEnemies:
     - {fileID: 1147878406450089431, guid: 427b8df2da4ecd34ba1a8d40a51f996c, type: 3}
-    - {fileID: 6789360718132609558, guid: d31716683714b1e4db848a2078578fdd, type: 3}
     spawnInterval: 0.5
+    maxTypeOfEnemies: 01000000
   - waveName: Wave 2
     numberOfEnemies: 10
     typeOfEnemies:
     - {fileID: 1147878406450089431, guid: 427b8df2da4ecd34ba1a8d40a51f996c, type: 3}
     - {fileID: 6789360718132609558, guid: d31716683714b1e4db848a2078578fdd, type: 3}
     spawnInterval: 1
+    maxTypeOfEnemies: 0900000001000000
   - waveName: Wave 3
     numberOfEnemies: 10
     typeOfEnemies:
     - {fileID: 1147878406450089431, guid: 427b8df2da4ecd34ba1a8d40a51f996c, type: 3}
     - {fileID: 6789360718132609558, guid: d31716683714b1e4db848a2078578fdd, type: 3}
     spawnInterval: 1
+    maxTypeOfEnemies: 0800000002000000
   spawnPoints:
   - {fileID: 343353611}
   - {fileID: 1852474345}
@@ -4175,6 +4177,12 @@ MonoBehaviour:
   fpsCam: {fileID: 1585305430}
   firePoint: {fileID: 876620866}
   range: 100
+  fireRate: 0.15
+  prevShotTime: 0
+  magSize: 20
+  ammoInMag: 20
+  ammoInInventory: 100
+  isReloading: 0
 --- !u!1 &1536117578
 GameObject:
   m_ObjectHideFlags: 0

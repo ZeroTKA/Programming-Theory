@@ -41,10 +41,9 @@ public class WaveManager : MonoBehaviour
     {
         if (canSpawn && nextSpawnTime < Time.time)
         {
-            GameObject randomEnemy = currentWave.typeOfEnemies[Random.Range(0, currentWave.typeOfEnemies.Length)];
+            GameObject randomEnemy = ReturnRandomEnemy();
             Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
             //Instantiate(randomEnemy, randomSpawnPoint.position, Quaternion.identity);
-            Debug.Log($"WE are here with this random enemy named {randomEnemy.name}");
             PoolEmpty pool = FindPool(randomEnemy);
             SpawnObject(randomEnemy, randomSpawnPoint.position, Quaternion.identity,pool);
             currentWave.numberOfEnemies--;
@@ -56,6 +55,39 @@ public class WaveManager : MonoBehaviour
 
         }
     }
+
+    //The whole point of this function is to return a random enemy within our limits. Meaning, we don't want true random
+    //We don't want 50 boss zombies to spawn. We want 45 small, and 5 big. This controls what we get
+    GameObject ReturnRandomEnemy()
+    {
+        GameObject randomEnemy;
+        int random = Random.Range(0, currentWave.typeOfEnemies.Length);
+        if (currentWave.maxTypeOfEnemies[random] > 0)
+        {
+            currentWave.maxTypeOfEnemies[random]--;
+            randomEnemy = currentWave.typeOfEnemies[random];
+            return randomEnemy;
+        }
+        else
+        {
+            bool hasFoundEnemy = false;
+            while(!hasFoundEnemy)
+            {
+                for (int i = 0; i < currentWave.typeOfEnemies.Length; i++)
+                {
+                    if (currentWave.maxTypeOfEnemies[i] > 0)
+                    {
+                        hasFoundEnemy = true;
+                        random = i;
+                        break;
+                    }
+                }
+            }
+            randomEnemy = currentWave.typeOfEnemies[random];
+            return randomEnemy;
+        }
+               
+    }
 }
 
 [System.Serializable]
@@ -65,4 +97,5 @@ public class Wave
     public int numberOfEnemies;
     public GameObject[] typeOfEnemies;
     public float spawnInterval;
+    public int[] maxTypeOfEnemies;
 }

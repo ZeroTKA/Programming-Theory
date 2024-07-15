@@ -56,7 +56,7 @@ public class Gun : MonoBehaviour
                 //GameObject a = Instantiate(FireVFX, firePoint.position , Quaternion.identity);
                 //GameObject b = Instantiate(HitVFX, hit.point, Quaternion.identity);
 
-                Runner script = hit.transform.gameObject.GetComponent<Runner>();
+                Enemy script = hit.transform.gameObject.GetComponent<Enemy>();
 
                 if (script != null)
                 {

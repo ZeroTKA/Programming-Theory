@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 134986985667618877}
   m_Layer: 0
   m_Name: Bigger Zombie
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,4 +144,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 0
-  MaxHealth: 50
+  MaxHealth: 30
