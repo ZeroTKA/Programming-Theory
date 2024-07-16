@@ -47,16 +47,14 @@ public class Gun : MonoBehaviour
             //set new prevShotTime
             Debug.Log("Shooting");
             prevShotTime = Time.time;
-            GameObject a = Instantiate(ShootVFX, firePoint.position , Quaternion.identity);
+            PoolManager.SpawnObject(ShootVFX, firePoint.position , Quaternion.identity, PoolManager.PoolEmpty.VFX);
             //fire shot
             RaycastHit hit;
             if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
             {
                 Debug.DrawRay(fpsCam.transform.position, fpsCam.transform.forward * hit.distance, Color.yellow);
-
-                //vfx hookup
                 
-                GameObject b = Instantiate(HitVFX, hit.point, Quaternion.identity);
+                PoolManager.SpawnObject(HitVFX, hit.point, Quaternion.identity,PoolManager.PoolEmpty.VFX);
 
                 Enemy script = hit.transform.gameObject.GetComponent<Enemy>();
 

@@ -5,11 +5,10 @@ using UnityEngine;
 public class MuzzleFlash : MonoBehaviour
 {
     Transform firePoint;
-    // Start is called before the first frame update
-    void Start()
+    // Start is called before the first frame update'
+    void OnEnable()
     {
         firePoint = GameObject.Find("Fire Point").transform;
-        
         StartCoroutine(Destroy());
     }
 
@@ -21,6 +20,6 @@ public class MuzzleFlash : MonoBehaviour
     IEnumerator Destroy()
     {
         yield return new WaitForSeconds(.2f);
-        Destroy(gameObject);
+        PoolManager.ReturnObjectToPool(gameObject);
     }
 }
