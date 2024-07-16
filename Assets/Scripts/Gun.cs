@@ -7,7 +7,7 @@ using UnityEngine.Assertions.Must;
 public class Gun : MonoBehaviour
 {
     [SerializeField] GameObject HitVFX;
-    //[SerializeField] GameObject ShootVFX;
+    [SerializeField] GameObject ShootVFX;
 
     [SerializeField] Camera fpsCam;
 
@@ -24,12 +24,6 @@ public class Gun : MonoBehaviour
     [SerializeField] int ammoInInventory;
 
     [SerializeField] bool isReloading = false;
-    
-
-    //public GameObject FireVFX;
-    //public GameObject HitVFX;
-
-    // Update is called once per frame
     void Update()
     {
         // left mouse button
@@ -47,12 +41,13 @@ public class Gun : MonoBehaviour
 
     public void Shooting()
     {
+
         if(prevShotTime + fireRate < Time.time && ammoInMag > 0 && !isReloading)
         {
             //set new prevShotTime
-            prevShotTime = Time.time;
             Debug.Log("Shooting");
-
+            prevShotTime = Time.time;
+            GameObject a = Instantiate(ShootVFX, firePoint.position , Quaternion.identity);
             //fire shot
             RaycastHit hit;
             if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
@@ -60,7 +55,7 @@ public class Gun : MonoBehaviour
                 Debug.DrawRay(fpsCam.transform.position, fpsCam.transform.forward * hit.distance, Color.yellow);
 
                 //vfx hookup
-                //GameObject a = Instantiate(ShootVFX, firePoint.position , firePoint.rotation * Quaternion.Euler(Vector3.up));
+                
                 GameObject b = Instantiate(HitVFX, hit.point, Quaternion.identity);
 
                 Enemy script = hit.transform.gameObject.GetComponent<Enemy>();
@@ -73,8 +68,6 @@ public class Gun : MonoBehaviour
             //lose ammo
             ammoInMag--;
         }
-        
-
     }
 
 
