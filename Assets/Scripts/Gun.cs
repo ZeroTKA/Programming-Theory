@@ -9,6 +9,8 @@ public class Gun : MonoBehaviour
     [SerializeField] GameObject HitVFX;
     [SerializeField] GameObject ShootVFX;
 
+    [SerializeField] private AudioClip shootSoundFX;
+
     [SerializeField] Camera fpsCam;
 
     [SerializeField] Transform firePoint;
@@ -45,10 +47,11 @@ public class Gun : MonoBehaviour
         if(prevShotTime + fireRate < Time.time && ammoInMag > 0 && !isReloading)
         {
             //set new prevShotTime
-            Debug.Log("Shooting");
             prevShotTime = Time.time;
             PoolManager.SpawnObject(ShootVFX, firePoint.position , Quaternion.identity, PoolManager.PoolEmpty.VFX);
-            //fire shot
+            SoundManager.instance.PlaySoundFXClip(shootSoundFX, firePoint, .2f);
+
+            //if you hit something
             RaycastHit hit;
             if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
             {
