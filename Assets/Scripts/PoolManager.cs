@@ -11,6 +11,7 @@ public class PoolManager : MonoBehaviour
     private static GameObject NoneGameobjectEmpty;
     private static GameObject RunnerGameobjectEmpty;
     private static GameObject VFXGameobjectEmpty;
+    private static GameObject SFXGameobjectEmpty;
 
 
     private void Awake()
@@ -72,6 +73,7 @@ public class PoolManager : MonoBehaviour
     }
     public void SetupEmpties()
     {
+        SFXGameobjectEmpty = new GameObject("Pooled SFX Empty");
         VFXGameobjectEmpty = new GameObject("Pooled VFX Empty");
         RunnerGameobjectEmpty = new GameObject("Pooled Runner Empty");
         EnemeyGameobjectEmpty = new GameObject("Pooled Enemy Empty");
@@ -79,6 +81,7 @@ public class PoolManager : MonoBehaviour
     }
     public enum PoolEmpty
     {
+        SFX,
         VFX,
         Enemies,
         Runner,
@@ -89,12 +92,15 @@ public class PoolManager : MonoBehaviour
         
         switch (p)
         {
+
             case PoolEmpty.Runner:
                 return RunnerGameobjectEmpty;
             case PoolEmpty.Enemies:
                 return EnemeyGameobjectEmpty;
             case PoolEmpty.None:
                 return NoneGameobjectEmpty;
+            case PoolEmpty.SFX:
+                return SFXGameobjectEmpty;
             case PoolEmpty.VFX:
                 return VFXGameobjectEmpty;
             default:

@@ -10,6 +10,7 @@ public class Gun : MonoBehaviour
     [SerializeField] GameObject ShootVFX;
 
     [SerializeField] private AudioClip shootSoundFX;
+    [SerializeField] private AudioClip reloadSoundFX;
 
     [SerializeField] Camera fpsCam;
 
@@ -43,7 +44,7 @@ public class Gun : MonoBehaviour
 
     public void Shooting()
     {
-
+        //if we can shoot
         if(prevShotTime + fireRate < Time.time && ammoInMag > 0 && !isReloading)
         {
             //set new prevShotTime
@@ -79,7 +80,6 @@ public class Gun : MonoBehaviour
     {
         if(!isReloading && ammoInInventory > 0 &&  ammoInMag < magSize)
         {
-            Debug.Log("Reloading");
             isReloading = true;
             StartCoroutine(ReloadingAmmo());
         }
@@ -87,7 +87,8 @@ public class Gun : MonoBehaviour
     }
     IEnumerator ReloadingAmmo()
     {
-        yield return new WaitForSeconds(3);
+        SoundManager.instance.PlaySoundFXClip(reloadSoundFX, firePoint, .2f);
+        yield return new WaitForSeconds(2.76f);
         int refillAmount = HowManyToRefill(magSize, ammoInMag);
         // if we have enough ammo in inventory
         if(ammoInInventory >= refillAmount)
