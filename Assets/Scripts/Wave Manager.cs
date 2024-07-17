@@ -7,6 +7,8 @@ using static PoolManager;
 
 public class WaveManager : MonoBehaviour
 {
+    
+
     public static WaveManager instance;
     public Wave[] waves;
     public Transform[] spawnPoints;
@@ -31,6 +33,7 @@ public class WaveManager : MonoBehaviour
             GameObject[] totalEnemies = GameObject.FindGameObjectsWithTag("Enemy");
             if (totalEnemies.Length == 0 && !canSpawn && currentWaveNumber + 1 != waves.Length)
             {
+                Debug.Log("moving to next wave");
                 MoveToNextWave();
             }
             else if(totalEnemies.Length == 0 && !canSpawn && currentWaveNumber + 1 == waves.Length)
@@ -45,10 +48,12 @@ public class WaveManager : MonoBehaviour
     public void StartWaves()
     {
         // do we need to set currentWave every frame??? no way.
+        Debug.Log("Start Waves called");
         currentWave = waves[currentWaveNumber];
     }
     private void MoveToNextWave()
     {
+        Debug.Log("Move TO Next Wave Called");
         currentWaveNumber++;
         canSpawn = true;
         TheDirector.instance.UpdateGameState(TheDirector.GameState.Player);
@@ -105,7 +110,20 @@ public class WaveManager : MonoBehaviour
         }
                
     }
-
+    public bool CheckIfIsLastWave()
+    {
+        Debug.Log("Checking Last Wave");
+        Debug.Log($"{currentWaveNumber} + {waves.Length} is {currentWaveNumber == waves.Length} ");
+        if (currentWaveNumber == waves.Length -1 )
+        {
+            Debug.Log("true");
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 
 [System.Serializable]

@@ -68,10 +68,24 @@ public class PlayerMovement : MonoBehaviour
     }
     void ReadyUp()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G) && TheDirector.instance.State == TheDirector.GameState.Player)
         {
-            _readyUp.transform.gameObject.SetActive(false);
-            TheDirector.instance.UpdateGameState(TheDirector.GameState.Wave);
+            if (WaveManager.instance.CheckIfIsLastWave())
+            {
+                StartCoroutine(LastWave());
+            }
+            else
+            {
+                _readyUp.transform.gameObject.SetActive(false);
+                TheDirector.instance.UpdateGameState(TheDirector.GameState.Wave);
+            }
         }
+    }
+    IEnumerator LastWave()
+    {
+        SoundManager.instance.PlaySoundFXClip(SoundManager.instance.lastWaveAudio,transform, .3f);
+        yield return new WaitForSeconds(SoundManager.instance.lastWaveAudio.length);
+        _readyUp.transform.gameObject.SetActive(false);
+        TheDirector.instance.UpdateGameState(TheDirector.GameState.Wave);
     }
 }

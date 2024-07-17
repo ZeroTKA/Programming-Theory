@@ -60,7 +60,7 @@ public class Gun : MonoBehaviour
         //check to see if we are empty and play sound
         if (isOutOfAmmo && !isReloading && prevShotClickTime + prevShotClickCD  < Time.time && hasButtonBeenUp)
         {
-            SoundManager.instance.PlaySoundFXClip(outOfAmmoClickSoundFX, firePoint, .4f);
+            SoundManager.instance.PlaySoundFXClip(outOfAmmoClickSoundFX, firePoint, .3f);
             prevShotClickTime = Time.time;
             hasButtonBeenUp = false;
         }

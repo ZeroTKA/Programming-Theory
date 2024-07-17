@@ -9,7 +9,7 @@ public class Runner : Enemy
     // This is Polymorphism //////////////////////////
  public override void SetSpeed(float s)
     {
-        Speed = 6;
+        Speed = 3;
         Agent.speed = Speed;
     }
     // Update is called once per frame

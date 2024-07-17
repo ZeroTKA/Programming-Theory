@@ -10,4 +10,9 @@ public class BiggerZombie : Enemy
     {
         Move();
     }
+    public override void SetSpeed(float s)
+    {
+        Speed = 1.5f;
+        Agent.speed = Speed;
+    }
 }

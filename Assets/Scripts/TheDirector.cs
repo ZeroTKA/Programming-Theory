@@ -6,8 +6,6 @@ using UnityEngine.Pool;
 
 public class TheDirector : MonoBehaviour
 {
-    [SerializeField] GameObject prefabEnemy;
-
     public static TheDirector instance;
     public GameState State;
     public static event Action<GameState> OnGameStateChanged;

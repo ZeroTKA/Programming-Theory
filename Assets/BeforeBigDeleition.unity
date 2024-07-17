@@ -361,7 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e61781e4258ad594da464fe2a2b68336, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabEnemy: {fileID: 0}
+  lastWave: {fileID: 8300000, guid: 8c73b436ca493a34b96a388dfef7c3a0, type: 3}
   State: 0
 --- !u!4 &119953137
 Transform:
@@ -4234,6 +4234,7 @@ MonoBehaviour:
   ammoInInventory: 1000
   isReloading: 0
   isOutOfAmmo: 0
+  hasButtonBeenUp: 1
 --- !u!1 &1536117578
 GameObject:
   m_ObjectHideFlags: 0
