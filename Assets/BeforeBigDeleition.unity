@@ -4223,15 +4223,17 @@ MonoBehaviour:
   ShootVFX: {fileID: 100000, guid: 03a4a1935a9f4454c861dfa0aa6df562, type: 3}
   shootSoundFX: {fileID: 8300000, guid: b8c1a42a38f238f4e92a2321499e0d24, type: 3}
   reloadSoundFX: {fileID: 8300000, guid: d9cea4c8166255a40a7fe4ad90bff348, type: 3}
+  outOfAmmoClickSoundFX: {fileID: 8300000, guid: 973f340b2daefdf46b253c8953d1e888, type: 3}
   fpsCam: {fileID: 1585305430}
   firePoint: {fileID: 876620866}
   range: 100
   fireRate: 0.15
   prevShotTime: 0
-  magSize: 1000
-  ammoInMag: 1000
+  magSize: 20
+  ammoInMag: 20
   ammoInInventory: 1000
   isReloading: 0
+  isOutOfAmmo: 0
 --- !u!1 &1536117578
 GameObject:
   m_ObjectHideFlags: 0

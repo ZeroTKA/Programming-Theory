@@ -11,6 +11,7 @@ public class Gun : MonoBehaviour
 
     [SerializeField] private AudioClip shootSoundFX;
     [SerializeField] private AudioClip reloadSoundFX;
+    [SerializeField] private AudioClip outOfAmmoClickSoundFX;
 
     [SerializeField] Camera fpsCam;
 
@@ -19,6 +20,9 @@ public class Gun : MonoBehaviour
     [SerializeField] float range = 100;
     [SerializeField] float fireRate;
     [SerializeField] float prevShotTime = 0;
+    float prevShotClickTime = 0;
+    float prevShotClickCD = 3f;
+   
 
     [SerializeField] int magSize;
     // ammo in the magazine ready to fire
@@ -26,7 +30,9 @@ public class Gun : MonoBehaviour
     // ammo available to load the magazine with.
     [SerializeField] int ammoInInventory;
 
-    [SerializeField] bool isReloading = false;
+    [SerializeField] private bool isReloading = false;
+    [SerializeField] private bool isOutOfAmmo = false;
+    [SerializeField] private bool hasButtonBeenUp = true;
     void Update()
     {
         // left mouse button
@@ -34,6 +40,13 @@ public class Gun : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             Shooting();
+        }
+        if(Input.GetMouseButtonUp(0))
+        {
+            if(!hasButtonBeenUp)
+            {
+                hasButtonBeenUp=true;
+            }
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -43,8 +56,15 @@ public class Gun : MonoBehaviour
     }
 
     public void Shooting()
-    {
-        //if we can shoot
+    {        
+        //check to see if we are empty and play sound
+        if (isOutOfAmmo && !isReloading && prevShotClickTime + prevShotClickCD  < Time.time && hasButtonBeenUp)
+        {
+            SoundManager.instance.PlaySoundFXClip(outOfAmmoClickSoundFX, firePoint, .4f);
+            prevShotClickTime = Time.time;
+            hasButtonBeenUp = false;
+        }
+        //check to see if we can shoot
         if(prevShotTime + fireRate < Time.time && ammoInMag > 0 && !isReloading)
         {
             //set new prevShotTime
@@ -69,6 +89,13 @@ public class Gun : MonoBehaviour
             }
             //lose ammo
             ammoInMag--;
+        }
+
+        // if we are empty make sure sound doesn't play because we are holding button down.
+        if (ammoInMag == 0)
+        {
+            isOutOfAmmo = true;
+            hasButtonBeenUp = false;
         }
     }
 
@@ -104,6 +131,7 @@ public class Gun : MonoBehaviour
         }
         
         isReloading = false;
+        isOutOfAmmo = false;
 
     }
     int HowManyToRefill(int magSize, int ammo)
