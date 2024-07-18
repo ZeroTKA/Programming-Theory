@@ -124,6 +124,11 @@ public class WaveManager : MonoBehaviour
             return false;
         }
     }
+
+    public int ReturnWaveNumber()
+    {
+        return currentWaveNumber;
+    }
 }
 
 [System.Serializable]

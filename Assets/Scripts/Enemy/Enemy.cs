@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float Health;
     [SerializeField] float MaxHealth;
 
+
     // This is Encapsulation ///////////////////
     private float m_Speed = 3.5f;
     public float Speed
@@ -33,7 +34,7 @@ public class Enemy : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         Agent = GetComponent<NavMeshAgent>();
     }
-    private void OnEnable()
+    public virtual void OnEnable()
     {
         VariablesToResetOnEnable();
     }
@@ -48,6 +49,14 @@ public class Enemy : MonoBehaviour
 
         if (Health <= 0)
         {
+            int random = Random.Range(0, 100);
+            if(random <= 5)
+            {
+                SoundManager.instance.PlaySoundFXClip(SoundManager.instance.death, transform, .3f);
+            }
+           
+
+            
             PoolManager.ReturnObjectToPool(gameObject);
             //gameObject.SetActive(false);
         }

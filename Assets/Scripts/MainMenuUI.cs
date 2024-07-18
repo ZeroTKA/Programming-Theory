@@ -8,6 +8,7 @@ using TMPro;
 public class MainMenuUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _GameStateText;
+    [SerializeField] private TextMeshProUGUI _WaveCount;
 
 
     // Subscribe to event
@@ -29,6 +30,13 @@ public class MainMenuUI : MonoBehaviour
 
         //example for turning UI on and off
         //_GameStateText.gameObject.SetActive(state == TheDirector.GameState.Player);
+        if(state == TheDirector.GameState.Wave)
+        {
+            _WaveCount.text = "Wave: " + WaveManager.instance.ReturnWaveNumber().ToString();            
+        }
+        _WaveCount.gameObject.SetActive(state == TheDirector.GameState.Wave);
+
+
     }
 
     public void ReadyForWave()

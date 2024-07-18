@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private AudioSource soundObject;
     [SerializeField] public AudioClip lastWaveAudio;
+    [SerializeField] public AudioClip death;
 
     private void Awake()
     {

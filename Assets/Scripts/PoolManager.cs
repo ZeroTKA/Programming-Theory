@@ -7,6 +7,7 @@ public class PoolManager : MonoBehaviour
 {
     public static List<PooledObjectInfo> ObjectPools = new List<PooledObjectInfo>();
 
+    private static GameObject QuickFootGameobjectEmpty;
     private static GameObject EnemeyGameobjectEmpty;
     private static GameObject NoneGameobjectEmpty;
     private static GameObject RunnerGameobjectEmpty;
@@ -75,12 +76,14 @@ public class PoolManager : MonoBehaviour
     {
         SFXGameobjectEmpty = new GameObject("Pooled SFX Empty");
         VFXGameobjectEmpty = new GameObject("Pooled VFX Empty");
+        QuickFootGameobjectEmpty = new GameObject("Pooled QuickFoot");
         RunnerGameobjectEmpty = new GameObject("Pooled Runner Empty");
         EnemeyGameobjectEmpty = new GameObject("Pooled Enemy Empty");
         NoneGameobjectEmpty = new GameObject("None Empty");
     }
     public enum PoolEmpty
     {
+        QuickFoot,
         SFX,
         VFX,
         Enemies,
@@ -102,6 +105,8 @@ public class PoolManager : MonoBehaviour
             case PoolEmpty.SFX:
                 return SFXGameobjectEmpty;
             case PoolEmpty.VFX:
+                return VFXGameobjectEmpty;
+            case PoolEmpty.QuickFoot:
                 return VFXGameobjectEmpty;
             default:
                 return null;               
