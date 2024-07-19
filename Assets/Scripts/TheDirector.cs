@@ -39,6 +39,8 @@ public class TheDirector : MonoBehaviour
                 break;
             case GameState.Defeat:
                 break;
+            case GameState.Pause:
+                break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
         }
@@ -47,6 +49,7 @@ public class TheDirector : MonoBehaviour
 
     public enum GameState
     {
+        Pause,
         Player,
         Wave,
         Victory,

@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform ceilingCheck;
 
     [SerializeField] TextMeshProUGUI _readyUp;
+    [SerializeField] GameObject _escapeMenu;
 
     Vector3 velocity;
     bool isGrounded;
@@ -36,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
         Jump();
         ApplyGravity();
         ReadyUp();
+        EscapeToMenu();
     }
     void MoveCharacter()
     {
@@ -78,6 +80,24 @@ public class PlayerMovement : MonoBehaviour
             {
                 _readyUp.transform.gameObject.SetActive(false);
                 TheDirector.instance.UpdateGameState(TheDirector.GameState.Wave);
+            }
+        }
+    }
+    void EscapeToMenu()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(_escapeMenu.gameObject.activeSelf == false)
+            {
+                _escapeMenu.gameObject.SetActive(true);
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+                _escapeMenu.gameObject.SetActive(false);
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
             }
         }
     }

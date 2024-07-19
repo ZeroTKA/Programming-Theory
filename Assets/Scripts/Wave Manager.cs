@@ -127,7 +127,7 @@ public class WaveManager : MonoBehaviour
 
     public int ReturnWaveNumber()
     {
-        return currentWaveNumber;
+        return currentWaveNumber + 1;
     }
 }
 
