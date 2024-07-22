@@ -19,6 +19,7 @@ public class WaveManager : MonoBehaviour
     private List<int> MaxTypeOfEnemiesList = new List<int>();
     private int currentWaveNumber = -1;
     private bool canSpawn = true;
+    private bool isLastWaveStarted = false;
     private float nextSpawnTime;
 
     private void Awake()
@@ -62,9 +63,6 @@ public class WaveManager : MonoBehaviour
 
     void SpawnEnemiesForWave()
     {
-
-
-
         if (canSpawn && nextSpawnTime < Time.time)
         {
             GameObject randomEnemy = ReturnRandomEnemy();
@@ -78,7 +76,6 @@ public class WaveManager : MonoBehaviour
             {
                 canSpawn = false;
             }
-
         }
     }
 
@@ -118,11 +115,9 @@ public class WaveManager : MonoBehaviour
     }
     public bool CheckIfIsLastWave()
     {
-        Debug.Log("Checking Last Wave");
-        Debug.Log($"{currentWaveNumber} + {waves.Length} is {currentWaveNumber == waves.Length - 1} ");
-        if (currentWaveNumber == waves.Length -1 )
+        if ((currentWaveNumber +1 == waves.Length -1) && !isLastWaveStarted)
         {
-            Debug.Log("true");
+            isLastWaveStarted = true;
             return true;
         }
         else
@@ -152,17 +147,23 @@ public class WaveManager : MonoBehaviour
         
         currentWaveNumber = -1;
         canSpawn = true;
+        isLastWaveStarted = false;
+
         NumberOfEnemiesList.Clear();
-        MaxTypeOfEnemiesList.Clear();
+        MaxTypeOfEnemiesList.Clear();  
+
     }
     public void GatherResetData()
-    {        
+    {
+
         NumberOfEnemiesList.Add(currentWave.numberOfEnemies);
+
         foreach(int i in currentWave.maxTypeOfEnemies)
         {
 
             MaxTypeOfEnemiesList.Add(i);           
         }
+
     }
 }
 

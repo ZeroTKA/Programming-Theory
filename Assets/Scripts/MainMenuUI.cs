@@ -34,6 +34,7 @@ public class MainMenuUI : MonoBehaviour
         //_GameStateText.gameObject.SetActive(state == TheDirector.GameState.Player);
         if(state == TheDirector.GameState.Wave)
         {
+            Debug.Log("Start Data Collection");
             WaveManager.instance.GatherResetData();
             _WaveCountText.text = "Wave: " + WaveManager.instance.ReturnWaveNumber().ToString();            
         }
@@ -72,13 +73,14 @@ public class MainMenuUI : MonoBehaviour
     public void RestartGame()
     {
         //this one uses instance. What's better??? Or different?
+        TheDirector.instance.UpdateGameState(TheDirector.GameState.Player);
         WaveManager.instance.RestartGamesForWave();
         // this one is static.
         Gun.instance.RestartGameForGun();
         PoolManager.RestartGameForPool();
         RestartGameForUI();
         PlayerMovement.instance.RestartGameForPlayerMovement();
-        TheDirector.instance.UpdateGameState(TheDirector.GameState.Player);
+        
 
     }
     public void RestartGameForUI()

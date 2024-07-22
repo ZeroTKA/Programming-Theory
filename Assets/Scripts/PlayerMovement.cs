@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocity;
     bool isGrounded;
     bool isHittingCeiling;
+    bool hasLastWaveStarted = false;
 
     private void Awake()
     {
@@ -75,11 +76,12 @@ public class PlayerMovement : MonoBehaviour
     }
     void ReadyUp()
     {
-        if (Input.GetKeyDown(KeyCode.G) && TheDirector.instance.State == TheDirector.GameState.Player)
+        if (Input.GetKeyDown(KeyCode.G) && TheDirector.instance.State == TheDirector.GameState.Player && !hasLastWaveStarted)
         {
             if (WaveManager.instance.CheckIfIsLastWave())
             {
                 StartCoroutine(LastWave());
+                hasLastWaveStarted = true;
             }
             else
             {
@@ -118,6 +120,7 @@ public class PlayerMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         transform.position = new Vector3(-2.9f, 1, -23f);
+        hasLastWaveStarted = false;
         
     }
 }
