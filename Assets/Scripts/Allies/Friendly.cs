@@ -39,8 +39,8 @@ public class Friendly : MonoBehaviour
         instance = this;
         friendylFireRate = Random.Range(.2f, .5f);
         laserLineRenderer = GetComponent<LineRenderer>();
-        laserLineRenderer.startWidth = .1f;
-        laserLineRenderer.endWidth = .1f;
+        laserLineRenderer.startWidth = .02f;
+        laserLineRenderer.endWidth = .02f;
         
     }
 
@@ -51,6 +51,7 @@ public class Friendly : MonoBehaviour
         {
             if ((target == null || !target.activeSelf) && !isLookingForEnemy)
             {
+                Debug.Log("looking for new target");
                 laserLineRenderer.enabled = false;
                 StartCoroutine(FindTarget());
 

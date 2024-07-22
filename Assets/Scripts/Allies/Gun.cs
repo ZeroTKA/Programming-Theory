@@ -95,7 +95,7 @@ public class Gun : MonoBehaviour
 
                 if (script != null)
                 {
-                    script.ChangeHealth(-5);
+                    script.ChangeHealth(-8);
                 }
             }
             //lose ammo
