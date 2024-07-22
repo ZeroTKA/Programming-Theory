@@ -33,6 +33,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private bool isReloading = false;
     [SerializeField] private bool isOutOfAmmo = false;
     [SerializeField] private bool hasButtonBeenUp = true;
+    [SerializeField] GameObject _escapeMenu;
     public static Gun instance;
     private void Awake()
     {
@@ -40,23 +41,28 @@ public class Gun : MonoBehaviour
     }
     void Update()
     {
-        // left mouse button
-        //Debug.Log($"{Input.GetMouseButton(0)}");
-        if (Input.GetMouseButton(0))
+        if (_escapeMenu.gameObject.activeSelf == false)
         {
-            Shooting();
-        }
-        if(Input.GetMouseButtonUp(0))
-        {
-            if(!hasButtonBeenUp)
+            // left mouse button
+            //Debug.Log($"{Input.GetMouseButton(0)}");
+            if (Input.GetMouseButton(0))
             {
-                hasButtonBeenUp=true;
+                Shooting();
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                if (!hasButtonBeenUp)
+                {
+                    hasButtonBeenUp = true;
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                Reloading();
             }
         }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Reloading();
-        }
+
+
 
     }
 

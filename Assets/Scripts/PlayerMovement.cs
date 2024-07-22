@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform ceilingCheck;
 
     [SerializeField] TextMeshProUGUI _readyUp;
+    [SerializeField] TextMeshProUGUI _optionsText;
     [SerializeField] GameObject _escapeMenu;
 
     public static PlayerMovement instance;
@@ -39,10 +40,13 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity.y = -2f;
         }
-        MoveCharacter();
-        Jump();
-        ApplyGravity();
-        ReadyUp();
+        if (_escapeMenu.gameObject.activeSelf == false)
+        {
+            MoveCharacter();
+            Jump();
+            ApplyGravity();
+            ReadyUp();
+        }
         EscapeToMenu();
     }
     void MoveCharacter()
@@ -96,12 +100,17 @@ public class PlayerMovement : MonoBehaviour
         {
             if(_escapeMenu.gameObject.activeSelf == false)
             {
+                if (!_optionsText.gameObject.activeSelf)
+                {
+                    _optionsText.gameObject.SetActive(true);
+                }
                 _escapeMenu.gameObject.SetActive(true);
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
             }
             else
             {
+                _optionsText.gameObject.SetActive(false);
                 _escapeMenu.gameObject.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
@@ -118,8 +127,9 @@ public class PlayerMovement : MonoBehaviour
     public void RestartGameForPlayerMovement()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Cursor.visible = false;        
         transform.position = new Vector3(-2.9f, 1, -23f);
+        Physics.SyncTransforms();
         hasLastWaveStarted = false;
         
     }

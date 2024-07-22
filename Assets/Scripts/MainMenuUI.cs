@@ -10,6 +10,10 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _GameStateText;
     [SerializeField] private TextMeshProUGUI _WaveCountText;
     [SerializeField] private TextMeshProUGUI _ReadyUpText;
+    [SerializeField] private TextMeshProUGUI _WinnerText;
+    [SerializeField] private TextMeshProUGUI _GameOverText;
+    [SerializeField] private TextMeshProUGUI _OptionsText;
+
     [SerializeField] private GameObject _GameOverTextsAndButtons;
 
 
@@ -38,9 +42,18 @@ public class MainMenuUI : MonoBehaviour
             WaveManager.instance.GatherResetData();
             _WaveCountText.text = "Wave: " + WaveManager.instance.ReturnWaveNumber().ToString();            
         }
+        if(state == TheDirector.GameState.Defeat || state == TheDirector.GameState.Victory)
+        {
+            _GameOverTextsAndButtons.SetActive(true);
+            _OptionsText.gameObject.SetActive(false);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+        }
         _WaveCountText.gameObject.SetActive(state == TheDirector.GameState.Wave);
         _ReadyUpText.gameObject.SetActive(state == TheDirector.GameState.Player);
-
+        _WinnerText.gameObject.SetActive(state == TheDirector.GameState.Victory);
+        _GameOverText.gameObject.SetActive(state == TheDirector.GameState.Defeat);
 
     }
 
