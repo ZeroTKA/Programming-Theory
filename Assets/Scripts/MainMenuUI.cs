@@ -8,7 +8,9 @@ using TMPro;
 public class MainMenuUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _GameStateText;
-    [SerializeField] private TextMeshProUGUI _WaveCount;
+    [SerializeField] private TextMeshProUGUI _WaveCountText;
+    [SerializeField] private TextMeshProUGUI _ReadyUpText;
+    [SerializeField] private GameObject _GameOverTextsAndButtons;
 
 
     // Subscribe to event
@@ -32,9 +34,11 @@ public class MainMenuUI : MonoBehaviour
         //_GameStateText.gameObject.SetActive(state == TheDirector.GameState.Player);
         if(state == TheDirector.GameState.Wave)
         {
-            _WaveCount.text = "Wave: " + WaveManager.instance.ReturnWaveNumber().ToString();            
+            WaveManager.instance.GatherResetData();
+            _WaveCountText.text = "Wave: " + WaveManager.instance.ReturnWaveNumber().ToString();            
         }
-        _WaveCount.gameObject.SetActive(state == TheDirector.GameState.Wave);
+        _WaveCountText.gameObject.SetActive(state == TheDirector.GameState.Wave);
+        _ReadyUpText.gameObject.SetActive(state == TheDirector.GameState.Player);
 
 
     }
@@ -64,5 +68,21 @@ public class MainMenuUI : MonoBehaviour
         EditorApplication.isPlaying = false;
 #endif
         Application.Quit();
+    }
+    public void RestartGame()
+    {
+        //this one uses instance. What's better??? Or different?
+        WaveManager.instance.RestartGamesForWave();
+        // this one is static.
+        Gun.instance.RestartGameForGun();
+        PoolManager.RestartGameForPool();
+        RestartGameForUI();
+        PlayerMovement.instance.RestartGameForPlayerMovement();
+        TheDirector.instance.UpdateGameState(TheDirector.GameState.Player);
+
+    }
+    public void RestartGameForUI()
+    {
+        _GameOverTextsAndButtons.gameObject.SetActive(false);
     }
 }

@@ -33,6 +33,11 @@ public class Gun : MonoBehaviour
     [SerializeField] private bool isReloading = false;
     [SerializeField] private bool isOutOfAmmo = false;
     [SerializeField] private bool hasButtonBeenUp = true;
+    public static Gun instance;
+    private void Awake()
+    {
+        instance = this;
+    }
     void Update()
     {
         // left mouse button
@@ -137,5 +142,15 @@ public class Gun : MonoBehaviour
     int HowManyToRefill(int magSize, int ammo)
     {
         return magSize - ammo;
+    }
+
+    public void RestartGameForGun()
+    {
+        prevShotTime = 0;
+        prevShotClickCD = 0;
+        isOutOfAmmo = false;
+        isReloading = false;
+        ammoInMag = magSize;
+        ammoInInventory = 1000;
     }
 }

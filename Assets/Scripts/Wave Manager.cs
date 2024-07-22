@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using static PoolManager;
@@ -14,6 +15,8 @@ public class WaveManager : MonoBehaviour
     public Transform[] spawnPoints;
 
     private Wave currentWave;
+    private List<int> NumberOfEnemiesList = new List<int>();
+    private List<int> MaxTypeOfEnemiesList = new List<int>();
     private int currentWaveNumber;
     private bool canSpawn = true;
     private float nextSpawnTime;
@@ -61,6 +64,9 @@ public class WaveManager : MonoBehaviour
 
     void SpawnEnemiesForWave()
     {
+
+
+
         if (canSpawn && nextSpawnTime < Time.time)
         {
             GameObject randomEnemy = ReturnRandomEnemy();
@@ -104,6 +110,7 @@ public class WaveManager : MonoBehaviour
                         break;
                     }
                 }
+                break;
             }
             randomEnemy = currentWave.typeOfEnemies[random];
             return randomEnemy;
@@ -128,6 +135,28 @@ public class WaveManager : MonoBehaviour
     public int ReturnWaveNumber()
     {
         return currentWaveNumber + 1;
+    }
+    public void RestartGamesForWave()
+    {
+       
+        //for loop the enemies again for the waves
+        for (int i = 0; i < NumberOfEnemiesList.Count; i++)
+        {            
+            waves[i].numberOfEnemies = NumberOfEnemiesList[i];            
+        }
+        waves[0].maxTypeOfEnemies.ToList();
+        currentWaveNumber = 0;
+        canSpawn = true;
+    }
+    public void GatherResetData()
+    {        
+        NumberOfEnemiesList.Add(currentWave.numberOfEnemies);
+        foreach(int i in currentWave.maxTypeOfEnemies)
+        {
+            Debug.Log("adding max type of enemies to the list in the amount of " + i);
+            MaxTypeOfEnemiesList.Add(i);           
+        }
+        Debug.Log($"{MaxTypeOfEnemiesList.Count} is items in list");
     }
 }
 

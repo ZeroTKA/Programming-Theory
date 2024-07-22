@@ -22,10 +22,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] TextMeshProUGUI _readyUp;
     [SerializeField] GameObject _escapeMenu;
 
+    public static PlayerMovement instance;
     Vector3 velocity;
     bool isGrounded;
     bool isHittingCeiling;
 
+    private void Awake()
+    {
+        instance = this;
+    }
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
@@ -107,5 +112,12 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(SoundManager.instance.lastWaveAudio.length);
         _readyUp.transform.gameObject.SetActive(false);
         TheDirector.instance.UpdateGameState(TheDirector.GameState.Wave);
+    }
+    public void RestartGameForPlayerMovement()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        transform.position = new Vector3(-2.9f, 1, -23f);
+        
     }
 }

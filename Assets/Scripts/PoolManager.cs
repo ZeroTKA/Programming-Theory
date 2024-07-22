@@ -124,6 +124,14 @@ public class PoolManager : MonoBehaviour
         }
     }
 
+    public static void RestartGameForPool()
+    {
+        GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in allEnemies)
+        {
+            ReturnObjectToPool(enemy);
+        }
+    }
 }
 
 
