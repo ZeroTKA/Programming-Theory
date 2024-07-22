@@ -66,7 +66,7 @@ public class Gun : MonoBehaviour
 
     }
 
-    public void Shooting()
+    private void Shooting()
     {        
         //check to see if we are empty and play sound
         if (isOutOfAmmo && !isReloading && prevShotClickTime + prevShotClickCD  < Time.time && hasButtonBeenUp)

@@ -2,20 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MuzzleFlash : MonoBehaviour
+public class FriendlyMuzzleFlash : MonoBehaviour
 {
-    Transform firePoint;
+    GameObject friendlyFirePoint;
     // Start is called before the first frame update'
     void OnEnable()
     {
-        firePoint = GameObject.Find("Fire Point").transform;
+        friendlyFirePoint = GameObject.Find("fireSpot");
         StartCoroutine(Destroy());
     }
-
     private void Update()
     {
-        gameObject.transform.position = firePoint.position;
-        gameObject.transform.rotation = firePoint.rotation;
+        gameObject.transform.position = friendlyFirePoint.transform.position;
+        gameObject.transform.rotation = friendlyFirePoint.transform.rotation;
     }
     IEnumerator Destroy()
     {
