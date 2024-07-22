@@ -18,7 +18,7 @@ public class Friendly : MonoBehaviour
     [SerializeField] Transform friendlyFirePoint;
 
     [SerializeField] float range = 100;
-    [SerializeField] float friendylFireRate;
+    float friendylFireRate;
     [SerializeField] float friendlyPrevShotTime = 0;
 
     [SerializeField] int friendlyMagSize;
@@ -34,6 +34,7 @@ public class Friendly : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        friendylFireRate = Random.Range(.2f, .5f);
     }
 
     void Update()
@@ -116,6 +117,7 @@ public class Friendly : MonoBehaviour
         friendlyAmmoInMag = friendlyMagSize;
         target = null;
         isLookingForEnemy = false;
+        friendylFireRate = Random.Range(.2f, .5f);
     }
     IEnumerator ReloadingAmmo()
     {
@@ -127,11 +129,16 @@ public class Friendly : MonoBehaviour
     IEnumerator FindTarget()
     {
         isLookingForEnemy = true;
-        yield return new WaitForSeconds(.5f);
-        target = GameObject.FindGameObjectWithTag("Enemy");
-        if(target != null)
+        yield return new WaitForSeconds(.3f);
+        GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if (allEnemies != null && allEnemies.Length > 0)
         {
+            target = allEnemies[Random.Range(0, allEnemies.Length - 1)];
             Debug.Log("New target is " + target.name + "which is set to " + target.activeSelf);
+            isLookingForEnemy = false;
+        }
+        else
+        {
             isLookingForEnemy = false;
         }
     }
