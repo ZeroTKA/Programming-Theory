@@ -17,7 +17,7 @@ public class WaveManager : MonoBehaviour
     private Wave currentWave;
     private List<int> NumberOfEnemiesList = new List<int>();
     private List<int> MaxTypeOfEnemiesList = new List<int>();
-    private int currentWaveNumber;
+    private int currentWaveNumber = -1;
     private bool canSpawn = true;
     private float nextSpawnTime;
 
@@ -36,8 +36,8 @@ public class WaveManager : MonoBehaviour
             GameObject[] totalEnemies = GameObject.FindGameObjectsWithTag("Enemy");
             if (totalEnemies.Length == 0 && !canSpawn && currentWaveNumber + 1 != waves.Length)
             {
-                Debug.Log("moving to next wave");
                 MoveToNextWave();
+                
             }
             else if(totalEnemies.Length == 0 && !canSpawn && currentWaveNumber + 1 == waves.Length)
             {
@@ -50,14 +50,12 @@ public class WaveManager : MonoBehaviour
     }
     public void StartWaves()
     {
-        // do we need to set currentWave every frame??? no way.
-        Debug.Log("Start Waves called");
+        currentWaveNumber++;
         currentWave = waves[currentWaveNumber];
     }
     private void MoveToNextWave()
     {
-        Debug.Log("Move TO Next Wave Called");
-        currentWaveNumber++;
+        
         canSpawn = true;
         TheDirector.instance.UpdateGameState(TheDirector.GameState.Player);
     }
@@ -105,6 +103,7 @@ public class WaveManager : MonoBehaviour
                 {
                     if (currentWave.maxTypeOfEnemies[i] > 0)
                     {
+                        currentWave.maxTypeOfEnemies[i]--;
                         hasFoundEnemy = true;
                         random = i;
                         break;
@@ -120,7 +119,7 @@ public class WaveManager : MonoBehaviour
     public bool CheckIfIsLastWave()
     {
         Debug.Log("Checking Last Wave");
-        Debug.Log($"{currentWaveNumber} + {waves.Length} is {currentWaveNumber == waves.Length} ");
+        Debug.Log($"{currentWaveNumber} + {waves.Length} is {currentWaveNumber == waves.Length - 1} ");
         if (currentWaveNumber == waves.Length -1 )
         {
             Debug.Log("true");
@@ -138,25 +137,32 @@ public class WaveManager : MonoBehaviour
     }
     public void RestartGamesForWave()
     {
-       
-        //for loop the enemies again for the waves
-        for (int i = 0; i < NumberOfEnemiesList.Count; i++)
-        {            
-            waves[i].numberOfEnemies = NumberOfEnemiesList[i];            
+        for(int i = 0; i < currentWaveNumber + 1; i++)
+        {        
+            waves[i].numberOfEnemies = NumberOfEnemiesList[i];
+
+            int maxType = waves[i].maxTypeOfEnemies.Length;
+
+            for (int j = 0; j < maxType; j++)
+            {
+                waves[i].maxTypeOfEnemies[j] = MaxTypeOfEnemiesList[j];
+            }
+            MaxTypeOfEnemiesList.RemoveRange(0, maxType);
         }
-        waves[0].maxTypeOfEnemies.ToList();
-        currentWaveNumber = 0;
+        
+        currentWaveNumber = -1;
         canSpawn = true;
+        NumberOfEnemiesList.Clear();
+        MaxTypeOfEnemiesList.Clear();
     }
     public void GatherResetData()
     {        
         NumberOfEnemiesList.Add(currentWave.numberOfEnemies);
         foreach(int i in currentWave.maxTypeOfEnemies)
         {
-            Debug.Log("adding max type of enemies to the list in the amount of " + i);
+
             MaxTypeOfEnemiesList.Add(i);           
         }
-        Debug.Log($"{MaxTypeOfEnemiesList.Count} is items in list");
     }
 }
 

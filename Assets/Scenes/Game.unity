@@ -2250,24 +2250,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves:
   - waveName: Wave 1
-    numberOfEnemies: 20
+    numberOfEnemies: 10
     typeOfEnemies:
     - {fileID: 2891126143100330789, guid: 787094420a068ca4da1d5a58f2a85746, type: 3}
+    - {fileID: 1147878406450089431, guid: 427b8df2da4ecd34ba1a8d40a51f996c, type: 3}
     spawnInterval: 0.2
-    maxTypeOfEnemies: 14000000
+    maxTypeOfEnemies: 0500000005000000
   - waveName: Wave 2
-    numberOfEnemies: 50
+    numberOfEnemies: 5
     typeOfEnemies:
     - {fileID: 1147878406450089431, guid: 427b8df2da4ecd34ba1a8d40a51f996c, type: 3}
     spawnInterval: 0.5
-    maxTypeOfEnemies: 32000000
+    maxTypeOfEnemies: 05000000
   - waveName: Wave 3
-    numberOfEnemies: 60
+    numberOfEnemies: 6
     typeOfEnemies:
     - {fileID: 1147878406450089431, guid: 427b8df2da4ecd34ba1a8d40a51f996c, type: 3}
     - {fileID: 6789360718132609558, guid: d31716683714b1e4db848a2078578fdd, type: 3}
     spawnInterval: 0.2
-    maxTypeOfEnemies: 3b00000001000000
+    maxTypeOfEnemies: 0500000001000000
   spawnPoints:
   - {fileID: 343353611}
   - {fileID: 1852474345}
