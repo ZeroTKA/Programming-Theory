@@ -16,6 +16,9 @@ public class Friendly : MonoBehaviour
     [SerializeField] private AudioClip friendlyReloadSoundFX;
 
     [SerializeField] Transform friendlyFirePoint;
+    private Transform laserStart;
+    private Transform laserEnd;
+    LineRenderer laserLineRenderer;
 
     [SerializeField] float range = 100;
     float friendylFireRate;
@@ -35,19 +38,29 @@ public class Friendly : MonoBehaviour
     {
         instance = this;
         friendylFireRate = Random.Range(.2f, .5f);
+        laserLineRenderer = GetComponent<LineRenderer>();
+        laserLineRenderer.startWidth = .1f;
+        laserLineRenderer.endWidth = .1f;
+        
     }
 
     void Update()
     {
+
         if (TheDirector.instance.State == TheDirector.GameState.Wave)
         {
             if ((target == null || !target.activeSelf) && !isLookingForEnemy)
             {
+                laserLineRenderer.enabled = false;
                 StartCoroutine(FindTarget());
+
             }
             else if(target != null && target.activeSelf)
             {
-                Debug.DrawRay(friendlyFirePoint.transform.position, target.transform.position - transform.position, Color.green);
+                laserLineRenderer.enabled = true;
+                laserLineRenderer.SetPosition(0, friendlyFirePoint.transform.position);
+                laserLineRenderer.SetPosition(1, target.transform.position);
+                //Debug.DrawRay(friendlyFirePoint.transform.position, target.transform.position - transform.position, Color.green);
                 LookAt();
                 FiendlyShooting();
             }
@@ -118,6 +131,7 @@ public class Friendly : MonoBehaviour
         target = null;
         isLookingForEnemy = false;
         friendylFireRate = Random.Range(.2f, .5f);
+        laserLineRenderer.enabled = false;
     }
     IEnumerator ReloadingAmmo()
     {
