@@ -28,11 +28,11 @@ public class Enemy : MonoBehaviour
     }
 
     protected NavMeshAgent Agent;
-    Transform Player;
+    Transform heartPosition;
 
     private void Awake()
     {
-        Player = GameObject.FindGameObjectWithTag("Player").transform;
+        heartPosition = GameObject.Find("Heart").transform;
         Agent = GetComponent<NavMeshAgent>();
     }
     public virtual void OnEnable()
@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
 
     protected void Move()
     {
-        Agent.destination = Player.position;
+        Agent.destination = heartPosition.position;
     }
     public void ChangeHealth(float change)
     {
