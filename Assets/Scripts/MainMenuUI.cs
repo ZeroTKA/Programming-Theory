@@ -14,6 +14,7 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _GameOverText;
     [SerializeField] private TextMeshProUGUI _OptionsText;
 
+
     [SerializeField] private GameObject _GameOverTextsAndButtons;
 
 

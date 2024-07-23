@@ -51,7 +51,6 @@ public class Friendly : MonoBehaviour
         {
             if ((target == null || !target.activeSelf) && !isLookingForEnemy)
             {
-                Debug.Log("looking for new target");
                 laserLineRenderer.enabled = false;
                 StartCoroutine(FindTarget());
 
@@ -66,12 +65,18 @@ public class Friendly : MonoBehaviour
                 FiendlyShooting();
             }
         }
-        else if(TheDirector.instance.State == TheDirector.GameState.Player && friendlyAmmoInMag != friendlyMagSize)
+        else
         {
+            laserLineRenderer.enabled = false;            
+        }
+        if(friendlyAmmoInMag != friendlyMagSize)
+        {
+            laserLineRenderer.enabled = false;
             friendlyAmmoInMag = friendlyMagSize;
             target = null;
             isLookingForEnemy = false;
         }
+
   
     }
 
@@ -149,7 +154,6 @@ public class Friendly : MonoBehaviour
         if (allEnemies != null && allEnemies.Length > 0)
         {
             target = allEnemies[Random.Range(0, allEnemies.Length - 1)];
-            Debug.Log("New target is " + target.name + "which is set to " + target.activeSelf);
             isLookingForEnemy = false;
         }
         else

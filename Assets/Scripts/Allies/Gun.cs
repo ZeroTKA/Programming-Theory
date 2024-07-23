@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
@@ -8,6 +9,9 @@ public class Gun : MonoBehaviour
 {
     [SerializeField] GameObject HitVFX;
     [SerializeField] GameObject ShootVFX;
+
+    [SerializeField] private TextMeshProUGUI _AmmoDisplayText;
+    [SerializeField] private TextMeshProUGUI _RbuttonText;
 
     [SerializeField] private AudioClip shootSoundFX;
     [SerializeField] private AudioClip reloadSoundFX;
@@ -33,11 +37,13 @@ public class Gun : MonoBehaviour
     [SerializeField] private bool isReloading = false;
     [SerializeField] private bool isOutOfAmmo = false;
     [SerializeField] private bool hasButtonBeenUp = true;
+    [SerializeField] private bool hasSeenReloadButton = false;
     [SerializeField] GameObject _escapeMenu;
     public static Gun instance;
     private void Awake()
     {
         instance = this;
+        _AmmoDisplayText.text = ammoInMag.ToString() + " / " + magSize;
     }
     void Update()
     {
@@ -74,6 +80,7 @@ public class Gun : MonoBehaviour
             SoundManager.instance.PlaySoundFXClip(outOfAmmoClickSoundFX, firePoint, .3f);
             prevShotClickTime = Time.time;
             hasButtonBeenUp = false;
+            _RbuttonText.gameObject.SetActive(true);
         }
         //check to see if we can shoot
         if(prevShotTime + fireRate < Time.time && ammoInMag > 0 && !isReloading)
@@ -100,11 +107,18 @@ public class Gun : MonoBehaviour
             }
             //lose ammo
             ammoInMag--;
+            _AmmoDisplayText.text = ammoInMag.ToString() + " / " + magSize;
+            
         }
 
         // if we are empty make sure sound doesn't play because we are holding button down.
         if (ammoInMag == 0)
         {
+            if (!hasSeenReloadButton)
+            { 
+            _RbuttonText.gameObject.SetActive(true);
+            hasSeenReloadButton = true;
+            }
             isOutOfAmmo = true;
             hasButtonBeenUp = false;
         }
@@ -140,7 +154,8 @@ public class Gun : MonoBehaviour
             ammoInMag += ammoInInventory;
             ammoInInventory = 0;            
         }
-        
+        _RbuttonText.gameObject.SetActive(false);
+        _AmmoDisplayText.text = ammoInMag.ToString() + " / " + magSize;
         isReloading = false;
         isOutOfAmmo = false;
 
@@ -158,5 +173,7 @@ public class Gun : MonoBehaviour
         isReloading = false;
         ammoInMag = magSize;
         ammoInInventory = 1000;
+        _AmmoDisplayText.text = ammoInMag.ToString() + " / " + magSize;
+        _AmmoDisplayText.gameObject.SetActive(true);
     }
 }
