@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -37,6 +38,13 @@ public class Enemy : MonoBehaviour
     public virtual void OnEnable()
     {
         VariablesToResetOnEnable();
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "Heart")
+        {
+            Heart.instance.ChangeHealth(DealDamage());
+        }
     }
 
     protected void Move()
@@ -76,6 +84,10 @@ public class Enemy : MonoBehaviour
     public virtual void SetSpeed(float s)
     {
         Agent.speed = s;
+    }
+    public virtual int DealDamage()
+    {
+        return -7;
     }
 }
 

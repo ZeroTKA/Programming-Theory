@@ -93,6 +93,7 @@ public class MainMenuUI : MonoBehaviour
         Gun.instance.RestartGameForGun();
         PoolManager.RestartGameForPool();
         Friendly.instance.RestartGameForFriendly();
+        Heart.instance.RestartGameForHeart();
         RestartGameForUI();
         PlayerMovement.instance.RestartGameForPlayerMovement();
         

@@ -24,4 +24,8 @@ public class QuickFoot : Enemy
             SoundManager.instance.PlaySoundFXClip(annoucementSceram, transform, .4f);
         }
     }
+    public override int DealDamage()
+    {
+        return -3;
+    }
 }

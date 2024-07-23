@@ -15,4 +15,8 @@ public class BiggerZombie : Enemy
         Speed = 1.5f;
         Agent.speed = Speed;
     }
+    public override int DealDamage()
+    {
+        return -10;
+    }
 }
