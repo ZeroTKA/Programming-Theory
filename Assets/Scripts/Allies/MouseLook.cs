@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-    public float mouseSensitivity = 50f;
+    private float mouseSensitivity = 200f;
     public Transform playerBody;
     [SerializeField] GameObject _escapeMenu;
 
@@ -20,7 +21,7 @@ public class MouseLook : MonoBehaviour
     void Update()
     {
         if (_escapeMenu.gameObject.activeSelf == false)
-        {
+        {             
             float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
             float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
             xRotation -= mouseY;
